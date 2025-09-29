@@ -77,7 +77,7 @@ public class NHAXUATBAN {
     }
     
     public void suaThongTin()throws Exception{
-        BufferedReader in = new BufferedReader(new InputStreamInput(System.in));
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         while(true){
             System.out.println("""
                            Ban muon thay doi thong tin gi!
