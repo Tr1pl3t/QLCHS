@@ -111,4 +111,27 @@ public class DSNV {
         }
         
     }
+    
+    public void timKiemNV()throws Exception{
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Nhap ma so nhan vien can tim: ");
+        String temp = in.readLine();
+        
+        for(int i = 0; i < ds.length; i++){
+            if(temp.equals(ds[i].getMaNV())){
+                ds[i].xuatNV();
+                return;
+            }
+        }
+        
+        System.out.println("Khong tim thay nhan vien can tim!"); 
+    }
+    
+    public void sortByTen(){
+        
+    }
+    
+    public void sortByLuong(){
+        
+    }
 }
