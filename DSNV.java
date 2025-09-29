@@ -36,6 +36,36 @@ public class DSNV {
     
     //nhap, xuat, them/xoa, tim kiem, sap xep theo ten/luong/...
     
+    public void chonChucNang() throws Exception{
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        boolean check = true;
+        int choice;
+        while(true){
+            System.out.println("""
+                               Chon chuc nang can thuc hien!
+                               1. Khoi tao danh sach
+                               2. Them nhan vien
+                               3. Xoa nhan vien
+                               4. Xuat danh sach nhan vien
+                               5. Tim kiem nhan vien
+                               6. Sap xep theo ten
+                               7. Sap xep theo luong
+                               0. Thoat chuong trinh""");
+            choice = Integer.parseInt(in.readLine());
+            switch(choice){
+                case 1: khoiTaoDS(); break;
+                case 2: themNV(); break;
+                case 3: xoaNV(); break;
+                case 4: xuatDS(); break;
+                case 5: timKiemNV(); break;
+                case 6: sortByTen(); break;
+                case 7: sortByLuong(); break;
+                case 0: return;
+                default: System.out.println("Cu phap khong dung, hay nhap lai!"); break;
+            }
+        }
+    }
+    
     public void khoiTaoDS()throws Exception{
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Nhap so luong nhan vien: ");
