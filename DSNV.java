@@ -173,7 +173,49 @@ public class DSNV {
         
     }
     
-    public void sortByLuong(){
-        
+    public void sortByLuong() throws Exception{
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        int choice;
+        while(true){
+            System.out.println("""
+                           Ban muon sap xep theo kieu nao?
+                           1. Sap xep tu thap den cao
+                           2. Sap xep tu cao den thap
+                           0. Khong sap xep""");
+            choice = Integer.parseInt(in.readLine());
+            
+            if(choice == 1){
+                for(int i = 0; i < ds.length-1; i++){
+                    for(int y = 0; y < ds.length-i-1; y++){
+                        if(ds[y].getLuong() > ds[y+1].getLuong()){
+                            NHANVIEN temp = ds[y];
+                            ds[y] = ds[y+1];
+                            ds[y+1] = temp;
+                        }
+                        
+                    }
+                }
+                return;
+            }
+            else if(choice == 2){
+                for(int i = 0; i < ds.length-1; i++){
+                    for(int y = 0; y < ds.length-i-1; y++){
+                        if(ds[y].getLuong() < ds[y+1].getLuong()){
+                            NHANVIEN temp = ds[y];
+                            ds[y] = ds[y+1];
+                            ds[y+1] = temp;
+                        }
+                        
+                    }
+                }
+                return;
+            }
+            else if(choice == 0){
+                return;
+            }
+            else{
+                System.out.println("Cu phap khong dung, hay nhap lai!");
+            }
+        }
     }
 }
