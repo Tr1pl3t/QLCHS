@@ -127,7 +127,49 @@ public class DSNV {
         System.out.println("Khong tim thay nhan vien can tim!"); 
     }
     
-    public void sortByTen(){
+    public void sortByTen() throws Exception{
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        int choice;
+        while(true){
+            System.out.println("""
+                           Ban muon sap xep theo kieu nao?
+                           1. Sap xep A-z
+                           2. Sap xep a-A
+                           0. Khong sap xep""");
+            choice = Integer.parseInt(in.readLine());
+            if(choice == 1){
+                for(int i = 0; i < ds.length-1; i++){
+                    for(int y = 0; y < ds.length-i-1; y++){
+                        if(ds[y].getTen().compareToIgnoreCase(ds[y+1].getTen()) > 0){ //>0 -> str1 > str2
+                            NHANVIEN temp = ds[y];
+                            ds[y] = ds[y+1];
+                            ds[y+1] = temp;
+                        }
+                        
+                    }
+                }
+                return;
+            }
+            else if(choice == 2){
+                for(int i = 0; i < ds.length-1; i++){
+                    for(int y = 0; y < ds.length-i-1; y++){
+                        if(ds[y].getTen().compareToIgnoreCase(ds[y+1].getTen()) < 0){ //<0 -> str1 < str2
+                            NHANVIEN temp = ds[y];
+                            ds[y] = ds[y+1];
+                            ds[y+1] = temp;
+                        }
+                        
+                    }
+                }
+                return;
+            }
+            else if(choice == 0){
+                return;
+            }
+            else{
+                System.out.println("Cu phap khong dung, hay nhap lai!");
+            }
+        }
         
     }
     
