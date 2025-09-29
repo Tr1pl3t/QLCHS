@@ -43,6 +43,14 @@ public class NHANVIEN {
         this.SDT = nv.SDT;
     }
     
+    public String getMaNV(){
+        return maNV;
+    }
+    
+    public void setMaNV(String maNV){
+        this.maNV = maNV;
+    }
+    
     public String getHoTen() {
         return hoTen;
     }
