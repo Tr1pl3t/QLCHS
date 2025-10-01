@@ -193,7 +193,6 @@ public class NHANVIEN {
             System.out.print("Lua chon: ");
             choice = Integer.parseInt(in.readLine());
             switch(choice){
-                case 0:return;
                 case 1:{
                     System.out.print("Ho ten nhan vien: ");
                     hoTen = in.readLine();
@@ -219,8 +218,9 @@ public class NHANVIEN {
                     SDT = hamSDT();//Nhap so dien thoai
                     break;
                 }
+                case 0:return;
                 default:{
-                    System.out.print("Chon khong dung!");
+                    System.out.print("Cu phap khong dung, hay nhap lai!");
                     break;
                 }
             }

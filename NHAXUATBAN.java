@@ -55,6 +55,23 @@ public class NHAXUATBAN {
         this.diaChi = diaChi;
     }
     
+    public String hamMaNXB()throws Exception{
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        String temp = "";
+        boolean check = true;
+        System.out.print("Ma nha xuat ban(5 ky tu): ");
+        while(check){
+            temp = in.readLine();
+            check = false;
+            if(temp.length() != 5){
+                check = true;
+                System.out.println("Cu phap khong dung! Hay nhap lai: ");
+            }
+        }
+        
+        return temp;
+    }
+    
     public void nhap()throws Exception{
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Nhap thong tin nha xuat ban");
@@ -63,7 +80,7 @@ public class NHAXUATBAN {
         tenNXB = tenNXB.trim().replaceAll("\\s+", " ");//Xoa khoang cach du thua
         
         System.out.print("Ma nha xuat ban: ");
-        maNXB = in.readLine();
+        maNXB = hamMaNXB();
         
         System.out.print("Dia chi: ");
         diaChi = in.readLine();
@@ -98,7 +115,7 @@ public class NHAXUATBAN {
                 }
                 case 2:{
                     System.out.print("Ma nha xuat ban: ");
-                    maNXB = in.readLine();
+                    maNXB = hamMaNXB();
                     break;
                 }
                 case 3:{

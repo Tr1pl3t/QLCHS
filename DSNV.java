@@ -46,20 +46,22 @@ public class DSNV {
                                1. Khoi tao danh sach
                                2. Them nhan vien
                                3. Xoa nhan vien
-                               4. Xuat danh sach nhan vien
-                               5. Tim kiem nhan vien
-                               6. Sap xep theo ten
-                               7. Sap xep theo luong
+                               4. Sua thong tin nhan vien
+                               5. Xuat danh sach nhan vien
+                               6. Tim kiem nhan vien
+                               7. Sap xep theo ten
+                               8. Sap xep theo luong
                                0. Thoat chuong trinh""");
             choice = Integer.parseInt(in.readLine());
             switch(choice){
                 case 1: khoiTaoDS(); break;
                 case 2: themNV(); break;
                 case 3: xoaNV(); break;
-                case 4: xuatDS(); break;
-                case 5: timKiemNV(); break;
-                case 6: sortByTen(); break;
-                case 7: sortByLuong(); break;
+                case 4: suaThongTin(); break;
+                case 5: xuatDS(); break;
+                case 6: timKiemNV(); break;
+                case 7: sortByTen(); break;
+                case 8: sortByLuong(); break;
                 case 0: return;
                 default: System.out.println("Cu phap khong dung, hay nhap lai!"); break;
             }
@@ -140,6 +142,26 @@ public class DSNV {
             System.out.println("Ma so khong tim thay!");
         }
         
+    }
+    
+    public void suaThongTin()throws Exception{
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Nhap ma so nhan vien can sua: ");
+        String temp = in.readLine();
+        int check = -1;
+        for(int i = 0; i < ds.length; i++){
+            if(temp.equals(ds[i].getMaNV())){
+                check = i;
+                break;
+            }
+        }
+        
+        if(check != -1){
+            ds[check].suaThongTin();
+        }
+        else{
+            System.out.println("Ma so khong tim thay!");
+        }
     }
     
     public void timKiemNV()throws Exception{
