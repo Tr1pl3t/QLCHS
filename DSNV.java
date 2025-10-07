@@ -38,7 +38,7 @@ public class DSNV {
     
     public void chonChucNang() throws Exception{
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        boolean check = true;
+        
         int choice;
         while(true){
             System.out.println("""

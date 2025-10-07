@@ -170,12 +170,9 @@ public class NHANVIEN {
     }
     
     public void xuatNV(){
-        System.out.println("Thong tin nhan vien!");
-        System.out.println(hoTen);
-        System.out.println("Ma NV: "+maNV);
-        System.out.println("Chuc vu: "+chucVu);
-        System.out.println("SDT: "+SDT);
-        System.out.println("Luong: :"+luong);
+        System.out.printf("%-10s %-20s %-15s %-10.2f %-15s\n",
+                    maNV, hoTen, chucVu, 
+                    luong, SDT);
     }
     
     public void suaThongTin()throws Exception{
