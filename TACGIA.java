@@ -9,11 +9,13 @@ package com.mycompany.qlchs;
  * @author ASUS
  */
 import java.io.*;
+import java.time.*;
+import java.time.format.*;
 
 public class TACGIA {
     private String maTG;
     private String ten;
-    private int[] ngaySinh;
+    private LocalDate ngaySinh;
     private String quocTich;
     private String tieuSu;
     
@@ -21,7 +23,7 @@ public class TACGIA {
         
     }
     
-    public TACGIA(String maTG,String ten, int[] ngaySinh,
+    public TACGIA(String maTG,String ten, LocalDate ngaySinh,
             String quocTich, String tieuSu){
         this.maTG = maTG;
         this.ten = ten;
@@ -47,17 +49,21 @@ public class TACGIA {
         this.maTG = maTG;
     }
     
-    public String getHoTen(){
+    public String getTen(){
         return ten;
     }
     
-    public void setHoTen(String hoTen){
-        this.ten = hoTen;
+    public void setTen(String ten){
+        this.ten = ten;
     }
     
-    //getNgaySinh
+    public LocalDate getNgaySinh(){
+        return ngaySinh;
+    }
     
-    //setNgaySinh
+    public void setNgaySinh(LocalDate ngaySinh){
+        this.ngaySinh = ngaySinh;
+    }
     
     public String getQuocTich(){
         return quocTich;
@@ -73,6 +79,33 @@ public class TACGIA {
     
     public void setTieuSu(String tieuSu){
         this.tieuSu = tieuSu;
+    }
+    
+    public LocalDate hamNgaySinh()throws Exception{
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy"); //tao format cua ngay/thang/nam
+        LocalDate ngaySinhTemp = null;
+        while(true){
+            System.out.print("Nhap nhay sinh (dd/MM/yyy): ");
+            String temp = in.readLine();
+            
+            try{
+                ngaySinhTemp = LocalDate.parse(temp, fmt); //chuyển chuỗi từ temp thành format ngày
+                
+                if(ngaySinhTemp.isAfter(LocalDate.now())){ //kiểm tra ngày sinh có quá ngày hiện tại
+                    System.out.println("Ngay sinh khong hop le! Hay nhap lai!");
+                }
+                else{
+                    break;
+                }
+            }
+            catch(DateTimeParseException e){ //kiểm tra hợp lệ của ngày tháng
+                System.out.println("Ngay sinh khong hop le! Hay nhap lai!");
+            }
+        }
+        
+        
+        return ngaySinhTemp;
     }
     
     public String hamMaTG()throws Exception{
@@ -103,7 +136,7 @@ public class TACGIA {
         maTG = in.readLine();
         
         System.out.print("Ngay sinh: ");
-        //ngay sinh
+        ngaySinh = hamNgaySinh();
         
         System.out.print("Quoc tich: ");
         quocTich = in.readLine();
@@ -113,12 +146,9 @@ public class TACGIA {
     }
     
     public void xuat(){
-        System.out.println("Thong tin tac gia!");
-        System.out.println(ten);
-        System.out.println("Ma NV: "+maTG);
-        //System.out.println("Ngay sinh: ");
-        System.out.println("Quoc tich: "+quocTich);
-        System.out.println("Tieu su: :"+tieuSu);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        System.out.printf("%-10s %-25s %-15s %-20s %-40s\n",
+                    maTG, ten, ngaySinh.format(fmt), quocTich, tieuSu);
     }
     
     public void suaThongTin() throws Exception{
@@ -147,7 +177,7 @@ public class TACGIA {
                     break;
                 }
                 case 3:{
-                    //Ngay sinh//Nhap chuc Vu
+                    ngaySinh = hamNgaySinh();
                     break;
                 }
                 case 4:{

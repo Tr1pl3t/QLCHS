@@ -87,10 +87,8 @@ public class NHAXUATBAN {
     }
     
     public void xuat(){
-        System.out.println("Thong tin nha xuat ban");
-        System.out.println("Ten: "+tenNXB);
-        System.out.println("Ma so: "+maNXB);
-        System.out.println("Dia chi: "+diaChi);
+        System.out.printf("%-10s %-30s %-30s\n",
+                    maNXB, tenNXB, diaChi);
     }
     
     public void suaThongTin()throws Exception{
