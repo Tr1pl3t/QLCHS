@@ -24,8 +24,9 @@ public class NHANVIEN {
         
     }
     //Parameterized
-    public NHANVIEN(String hoTen, String ho, String ten, String chucVu,
+    public NHANVIEN(String maNV, String hoTen, String ho, String ten, String chucVu,
             float luong, String SDT){
+        this.maNV = maNV;
         this.hoTen = hoTen; 
         this.ho = ho;
         this.ten = ten;

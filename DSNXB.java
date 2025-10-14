@@ -44,11 +44,11 @@ public class DSNXB {
             System.out.println("""
                                Chon chuc nang can thuc hien!
                                1. Khoi tao danh sach
-                               2. Them nhan vien
-                               3. Xoa nhan vien
-                               4. Sua thong tin nhan vien
-                               5. Xuat danh sach nhan vien
-                               6. Tim kiem nhan vien
+                               2. Them nha xuat ban
+                               3. Xoa nha xuat ban
+                               4. Sua thong tin nha xuat ban
+                               5. Xuat danh sach nha xuat ban
+                               6. Tim kiem nha xuat ban
                                7. Sap xep theo ten
                                0. Thoat chuong trinh""");
             choice = Integer.parseInt(in.readLine());
@@ -117,7 +117,7 @@ public class DSNXB {
         }
 
         
-        System.out.print("Nhap ma so NV can xoa: ");
+        System.out.print("Nhap ma so NXB can xoa: ");
         String temp = in.readLine();
         int check = -1;
         for(int i = 0; i < nxb.length; i++){
