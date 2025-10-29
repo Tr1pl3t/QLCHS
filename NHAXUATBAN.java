@@ -10,22 +10,22 @@ package com.mycompany.qlchs;
  */
 import java.io.*;
 
-public class NHAXUATBAN {
+public class NhaXuatBan {
     private String maNXB;
     private String tenNXB;
     private String diaChi;
     
-    public NHAXUATBAN(){
+    public NhaXuatBan(){
         
     }
     
-    public NHAXUATBAN(String maNXB, String tenNXB, String diaChi){
+    public NhaXuatBan(String maNXB, String tenNXB, String diaChi){
         this.maNXB = maNXB;
         this.tenNXB = tenNXB;
         this.diaChi = diaChi;
     }
     
-    public NHAXUATBAN(NHAXUATBAN nxb){
+    public NhaXuatBan(NhaXuatBan nxb){
         this.maNXB = nxb.maNXB;
         this.tenNXB = nxb.tenNXB;
         this.diaChi = nxb.tenNXB;

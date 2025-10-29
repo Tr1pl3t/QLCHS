@@ -12,33 +12,30 @@ import java.io.*;
 import java.time.*;
 import java.time.format.*;
 
-public class TACGIA {
+public class TacGia {
     private String maTG;
     private String ten;
     private LocalDate ngaySinh;
     private String quocTich;
-    private String tieuSu;
     
-    public TACGIA(){
+    public TacGia(){
         
     }
     
-    public TACGIA(String maTG,String ten, LocalDate ngaySinh,
+    public TacGia(String maTG,String ten, LocalDate ngaySinh,
             String quocTich, String tieuSu){
         this.maTG = maTG;
         this.ten = ten;
         this.ngaySinh = ngaySinh;
         this.quocTich = quocTich;
-        this.tieuSu = tieuSu;
         
     }
     
-    public TACGIA(TACGIA tg){
+    public TacGia(TacGia tg){
         this.maTG = tg.maTG;
         this.ten = tg.ten;
         this.ngaySinh = tg.ngaySinh;
         this.quocTich = tg.quocTich;
-        this.tieuSu = tg.tieuSu;
     }
     
     public String getMaTG(){
@@ -73,13 +70,6 @@ public class TACGIA {
         this.quocTich = quocTich;
     }
     
-    public String getTieuSu(){
-        return tieuSu;
-    }
-    
-    public void setTieuSu(String tieuSu){
-        this.tieuSu = tieuSu;
-    }
     
     public LocalDate hamNgaySinh()throws Exception{
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -141,14 +131,13 @@ public class TACGIA {
         System.out.print("Quoc tich: ");
         quocTich = in.readLine();
         
-        System.out.print("Tieu su: ");
-        tieuSu = in.readLine();
+        
     }
     
     public void xuat(){
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        System.out.printf("%-10s %-25s %-15s %-20s %-40s\n",
-                    maTG, ten, ngaySinh.format(fmt), quocTich, tieuSu);
+        System.out.printf("%-10s %-25s %-15s %-20s\n",
+                    maTG, ten, ngaySinh.format(fmt), quocTich);
     }
     
     public void suaThongTin() throws Exception{
@@ -160,7 +149,6 @@ public class TACGIA {
                            2. Ma tac gia
                            3. Ngay sinh
                            4. Quoc tich
-                           5. Tieu su
                            0. Khong thay doi gi nua""");
             int choice;
             System.out.print("Lua chon: ");
@@ -183,11 +171,6 @@ public class TACGIA {
                 case 4:{
                     System.out.print("Quoc tich: ");
                     quocTich = in.readLine();
-                    break;
-                }
-                case 5:{
-                    System.out.print("Tieu su: ");
-                    tieuSu = in.readLine();
                     break;
                 }
                 case 0:return;

@@ -14,26 +14,26 @@ import java.time.format.*;
 import java.util.Arrays;
 
 public class DSTG {
-    private TACGIA[] tg;
+    private TacGia[] dsTG;
     
     public DSTG(){
-        tg = new TACGIA[0];
+        dsTG = new TacGia[0];
     }
     
-    public DSTG(TACGIA[] tg){
-        this.tg = tg;
+    public DSTG(TacGia[] dsTG){
+        this.dsTG = dsTG;
     }
     
-    public DSTG(DSTG dstg){
-        this.tg = dstg.tg;
+    public DSTG(DSTG dsdsTG){
+        this.dsTG = dsdsTG.dsTG;
     }
     
-    public TACGIA[] getTG(){
-        return tg;
+    public TacGia[] getTG(){
+        return dsTG;
     }
     
-    public void setTG(TACGIA[] tg){
-        this.tg = tg;
+    public void setTG(TacGia[] dsTG){
+        this.dsTG = dsTG;
     }
     
     public void chonChucNang()throws Exception{
@@ -50,7 +50,8 @@ public class DSTG {
                                5. Xuat danh sach tac gia
                                6. Tim kiem tac gia
                                7. Sap xep theo ten
-                               0. Thoat chuong trinh""");
+                               8. Lay du lieu tu file
+                               0. Thoat chuong trinh (Tu dong ghi de du lieu vao file)""");
             choice = Integer.parseInt(in.readLine());
             switch(choice){
                 case 1: khoiTaoDS(); break;
@@ -60,9 +61,68 @@ public class DSTG {
                 case 5: xuatDS(); break;
                 case 6: timKiemTG(); break;
                 case 7: sortByTen(); break;
-                case 0: return;
+                case 8: docFile(); break;
+                case 0:{
+                    ghiFile();
+                    return;
+                }
                 default: System.out.println("Cu phap khong dung, hay nhap lai!"); break;
             }
+        }
+    }
+    
+    public void docFile()throws Exception{
+        try{
+            FileReader fr = new FileReader("DanhSachTacGia.txt");
+            BufferedReader in = new BufferedReader(fr);
+            
+            String line;
+            while((line = in.readLine()) != null){//kiểm tra còn dữ liệu
+                line = line.trim();
+                if(line.isEmpty()) continue; // bỏ qua dòng trống
+                
+                String[] temp = line.split(",");
+                if(temp.length == 4){ //kiểm tra có đúng format
+                    TacGia tg = new TacGia();
+                    tg.setMaTG(temp[0].trim());
+                    tg.setTen(temp[1].trim());
+                    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    LocalDate ngaySinh = LocalDate.parse(temp[2].trim(), fmt);
+                    tg.setNgaySinh(ngaySinh);
+                    tg.setQuocTich(temp[3].trim());
+                    
+                    dsTG = Arrays.copyOf(dsTG, dsTG.length+1);
+                }
+                else{
+                    System.out.println("Sai format!");
+                }
+                
+            } 
+            in.close();
+            fr.close();
+        }
+        catch(IOException e){
+            System.out.println("Loi doc file: " + e.getMessage());
+        }
+    }
+    
+    public void ghiFile()throws Exception{
+        try{
+            FileWriter fw = new FileWriter("DanhSachTacGia.txt");
+            BufferedWriter out = new BufferedWriter(fw);
+            
+            for(int i = 0; i < dsTG.length; i++){
+                TacGia tg = dsTG[i];
+                
+                out.write(tg.getMaTG() + ", " + tg.getTen() + ", "
+                        + tg.getNgaySinh() + ", " + tg.getQuocTich());
+                out.newLine();
+            }
+            out.close();
+            fw.close();
+        }
+        catch(IOException e){
+            System.out.println("Loi ghi file: " + e.getMessage());
         }
     }
     
@@ -71,12 +131,12 @@ public class DSTG {
         System.out.print("Nhap so luong can khoi tao: ");
         int soLuong = Integer.parseInt(in.readLine());
         
-        tg = new TACGIA[soLuong];
+        dsTG = new TacGia[soLuong];
         
         for(int i = 0; i < soLuong; i++){
             System.out.print("Nha xuat ban "+(i+1)+" - ");
-            tg[i] = new TACGIA(); //khoi tao doi tuong
-            tg[i].nhap();
+            dsTG[i] = new TacGia(); //khoi tao doi tuong
+            dsTG[i].nhap();
             System.out.println("____________________________");
         }
     }
@@ -84,17 +144,17 @@ public class DSTG {
     public void xuatDS(){
         System.out.println("DANH SACH TAC GIA!");
         // In tiêu đề
-        System.out.printf("%-10s %-25s %-15s %-20s %-40s\n",
-                "Ma TG", "Ten TG", "Ngay Sinh", "Quoc Tich", "Tieu Su");
+        System.out.printf("%-10s %-25s %-15s %-20s\n",
+                "Ma TG", "Ten TG", "Ngay Sinh", "Quoc Tich");
         System.out.println("-----------------------------------------------------------------------------------------------------------");
 
         // In danh sách
-        for (TACGIA temp : tg) { // dsTG là danh sách các tác giả
+        for (TacGia temp : dsTG) { // dsTG là danh sách các tác giả
             // Chuyển ngày sinh từ int[] sang dạng dd/mm/yyyy
             LocalDate d = temp.getNgaySinh();
             DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            System.out.printf("%-10s %-25s %-15s %-20s %-40s\n",
-                    temp.getMaTG(), temp.getTen(), d.format(fmt), temp.getQuocTich(), temp.getTieuSu());
+            System.out.printf("%-10s %-25s %-15s %-20s\n",
+                    temp.getMaTG(), temp.getTen(), d.format(fmt), temp.getQuocTich());
         }
     }
     
@@ -102,11 +162,11 @@ public class DSTG {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Them bao nhieu tac gia: ");
         int soLuong = Integer.parseInt(in.readLine());
-        tg = Arrays.copyOf(tg, tg.length+soLuong);
-        for(int i = tg.length-soLuong; i < tg.length; i++){
+        dsTG = Arrays.copyOf(dsTG, dsTG.length+soLuong);
+        for(int i = dsTG.length-soLuong; i < dsTG.length; i++){
             System.out.print("Nguoi thu "+(i+1)+" - ");
-            tg[i] = new TACGIA(); //khoi tao doi tuong
-            tg[i].nhap();
+            dsTG[i] = new TacGia(); //khoi tao doi tuong
+            dsTG[i].nhap();
             System.out.println("____________________________");
         }
     }
@@ -114,7 +174,7 @@ public class DSTG {
     public void xoaTG()throws Exception{
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         
-        if (tg == null || tg.length == 0) {
+        if (dsTG == null || dsTG.length == 0) {
             System.out.println("Danh sach rong, khong co gi de xoa!");
             return;
         }
@@ -123,18 +183,18 @@ public class DSTG {
         System.out.print("Nhap ma so TG can xoa: ");
         String temp = in.readLine();
         int check = -1;
-        for(int i = 0; i < tg.length; i++){
-            if(temp.equals(tg[i].getMaTG())){
+        for(int i = 0; i < dsTG.length; i++){
+            if(temp.equals(dsTG[i].getMaTG())){
                 check = i;
                 break;
             }
         }
         
         if(check != -1){
-            for(int i = check; i < tg.length-1; i++){
-                tg[i] = tg[i+1];
+            for(int i = check; i < dsTG.length-1; i++){
+                dsTG[i] = dsTG[i+1];
             }
-            tg = Arrays.copyOf(tg, tg.length-1);
+            dsTG = Arrays.copyOf(dsTG, dsTG.length-1);
         }
         else{
             System.out.println("Ma so khong tim thay!");
@@ -146,15 +206,15 @@ public class DSTG {
         System.out.print("Nhap ma so tac gia can sua: ");
         String temp = in.readLine();
         int check = -1;
-        for(int i = 0; i < tg.length; i++){
-            if(temp.equals(tg[i].getMaTG())){
+        for(int i = 0; i < dsTG.length; i++){
+            if(temp.equals(dsTG[i].getMaTG())){
                 check = i;
                 break;
             }
         }
         
         if(check != -1){
-            tg[check].suaThongTin();
+            dsTG[check].suaThongTin();
         }
         else{
             System.out.println("Ma so khong tim thay!");
@@ -166,9 +226,9 @@ public class DSTG {
         System.out.print("Nhap ma so tac gia can tim: ");
         String temp = in.readLine();
         
-        for(int i = 0; i < tg.length; i++){
-            if(temp.equals(tg[i].getMaTG())){
-                tg[i].xuat();
+        for(int i = 0; i < dsTG.length; i++){
+            if(temp.equals(dsTG[i].getMaTG())){
+                dsTG[i].xuat();
                 return;
             }
         }
@@ -187,12 +247,12 @@ public class DSTG {
                            0. Khong sap xep""");
             choice = Integer.parseInt(in.readLine());
             if(choice == 1){
-                for(int i = 0; i < tg.length-1; i++){
-                    for(int y = 0; y < tg.length-i-1; y++){
-                        if(tg[y].getTen().compareToIgnoreCase(tg[y+1].getTen()) > 0){ //>0 -> str1 > str2
-                            TACGIA temp = tg[y];
-                            tg[y] = tg[y+1];
-                            tg[y+1] = temp;
+                for(int i = 0; i < dsTG.length-1; i++){
+                    for(int y = 0; y < dsTG.length-i-1; y++){
+                        if(dsTG[y].getTen().compareToIgnoreCase(dsTG[y+1].getTen()) > 0){ //>0 -> str1 > str2
+                            TacGia temp = dsTG[y];
+                            dsTG[y] = dsTG[y+1];
+                            dsTG[y+1] = temp;
                         }
                         
                     }
@@ -200,12 +260,12 @@ public class DSTG {
                 return;
             }
             else if(choice == 2){
-                for(int i = 0; i < tg.length-1; i++){
-                    for(int y = 0; y < tg.length-i-1; y++){
-                        if(tg[y].getTen().compareToIgnoreCase(tg[y+1].getTen()) < 0){ //<0 -> str1 < str2
-                            TACGIA temp = tg[y];
-                            tg[y] = tg[y+1];
-                            tg[y+1] = temp;
+                for(int i = 0; i < dsTG.length-1; i++){
+                    for(int y = 0; y < dsTG.length-i-1; y++){
+                        if(dsTG[y].getTen().compareToIgnoreCase(dsTG[y+1].getTen()) < 0){ //<0 -> str1 < str2
+                            TacGia temp = dsTG[y];
+                            dsTG[y] = dsTG[y+1];
+                            dsTG[y+1] = temp;
                         }
                         
                     }

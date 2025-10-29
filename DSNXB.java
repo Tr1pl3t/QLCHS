@@ -12,26 +12,26 @@ import java.io.*;
 import java.util.Arrays;
 
 public class DSNXB {
-    private NHAXUATBAN[] nxb;
+    private NhaXuatBan[] dsNXB;
     
     public DSNXB(){
-        nxb = new NHAXUATBAN[0];
+        dsNXB = new NhaXuatBan[0];
     }
     
-    public DSNXB(NHAXUATBAN[] nxb){
-        this.nxb = nxb;
+    public DSNXB(NhaXuatBan[] dsNXB){
+        this.dsNXB = dsNXB;
     }
     
-    public DSNXB(DSNXB dsnxb){
-        nxb = dsnxb.nxb;
+    public DSNXB(DSNXB dsdsNXB){
+        dsNXB = dsdsNXB.dsNXB;
     }
     
-    public NHAXUATBAN[] getNXB(){
-        return nxb;
+    public NhaXuatBan[] getNXB(){
+        return dsNXB;
     }
     
-    public void setNXB(NHAXUATBAN[] temp){
-        nxb = temp;
+    public void setNXB(NhaXuatBan[] temp){
+        dsNXB = temp;
     }
     
     //nhap, xuat, them/xoa, sort by name, tim kiem
@@ -50,7 +50,8 @@ public class DSNXB {
                                5. Xuat danh sach nha xuat ban
                                6. Tim kiem nha xuat ban
                                7. Sap xep theo ten
-                               0. Thoat chuong trinh""");
+                               8. Lay du lieu tu file
+                               0. Thoat chuong trinh (Tu dong ghi de du lieu vao file)""");
             choice = Integer.parseInt(in.readLine());
             switch(choice){
                 case 1: khoiTaoDS(); break;
@@ -60,9 +61,65 @@ public class DSNXB {
                 case 5: xuatDS(); break;
                 case 6: timKiemNXB(); break;
                 case 7: sortByTen(); break;
-                case 0: return;
+                case 8: docFile(); break;
+                case 0:{
+                    ghiFile();
+                    return;
+                }
                 default: System.out.println("Cu phap khong dung, hay nhap lai!"); break;
             }
+        }
+    }
+    
+    public void docFile()throws Exception{
+        try{
+            FileReader fr = new FileReader("DanhSachNhaXuatBan.txt");
+            BufferedReader in = new BufferedReader(fr);
+            
+            String line;
+            while((line = in.readLine()) != null){//kiểm tra còn dữ liệu
+                line = line.trim();
+                if(line.isEmpty()) continue; // bỏ qua dòng trống
+                
+                String[] temp = line.split(",");
+                if(temp.length == 5){ //kiểm tra có đúng format
+                    NhaXuatBan nxb = new NhaXuatBan();
+                    nxb.setMaNXB(temp[0].trim());
+                    nxb.setTenNXB(temp[1].trim());
+                    String diaChi = temp[2].trim() + ", " + temp[3].trim() + ", " + temp[4].trim();
+                    nxb.setDiaChi(diaChi);
+                    
+                    dsNXB = Arrays.copyOf(dsNXB, dsNXB.length+1);
+                }
+                else{
+                    System.out.println("Sai format!");
+                }
+                
+            } 
+            in.close();
+            fr.close();
+        }
+        catch(IOException e){
+            System.out.println("Loi doc file: " + e.getMessage());
+        }
+    }
+    
+    public void ghiFile()throws Exception{
+        try{
+            FileWriter fw = new FileWriter("DanhSachNhaXuatBan.txt");
+            BufferedWriter out = new BufferedWriter(fw);
+            
+            for(int i = 0; i < dsNXB.length; i++){
+                NhaXuatBan nxb = dsNXB[i];
+                
+                out.write(nxb.getMaNXB() + ", " + nxb.getTenNXB() + ", " + nxb.getDiaChi());
+                out.newLine();
+            }
+            out.close();
+            fw.close();
+        }
+        catch(IOException e){
+            System.out.println("Loi ghi file: " + e.getMessage());
         }
     }
     
@@ -71,12 +128,12 @@ public class DSNXB {
         System.out.print("Nhap so luong can khoi tao: ");
         int soLuong = Integer.parseInt(in.readLine());
         
-        nxb = new NHAXUATBAN[soLuong];
+        dsNXB = new NhaXuatBan[soLuong];
         
         for(int i = 0; i < soLuong; i++){
             System.out.print("Nha xuat ban "+(i+1)+" - ");
-            nxb[i] = new NHAXUATBAN(); //khoi tao doi tuong
-            nxb[i].nhap();
+            dsNXB[i] = new NhaXuatBan(); //khoi tao doi tuong
+            dsNXB[i].nhap();
             System.out.println("____________________________");
         }
     }
@@ -89,7 +146,7 @@ public class DSNXB {
         System.out.println("--------------------------------------------------------------------------");
 
         // In danh sach
-        for (NHAXUATBAN temp : nxb) {
+        for (NhaXuatBan temp : dsNXB) {
             System.out.printf("%-10s %-30s %-30s\n",
                     temp.getMaNXB(), temp.getTenNXB(), temp.getDiaChi());
         }
@@ -99,11 +156,11 @@ public class DSNXB {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Them bao nhieu nha xuat ban: ");
         int soLuong = Integer.parseInt(in.readLine());
-        nxb = Arrays.copyOf(nxb, nxb.length+soLuong);
-        for(int i = nxb.length-soLuong; i < nxb.length; i++){
+        dsNXB = Arrays.copyOf(dsNXB, dsNXB.length+soLuong);
+        for(int i = dsNXB.length-soLuong; i < dsNXB.length; i++){
             System.out.print("Nguoi thu "+(i+1)+" - ");
-            nxb[i] = new NHAXUATBAN(); //khoi tao doi tuong
-            nxb[i].nhap();
+            dsNXB[i] = new NhaXuatBan(); //khoi tao doi tuong
+            dsNXB[i].nhap();
             System.out.println("____________________________");
         }
     }
@@ -111,7 +168,7 @@ public class DSNXB {
     public void xoaNXB() throws Exception{
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         
-        if (nxb == null || nxb.length == 0) {
+        if (dsNXB == null || dsNXB.length == 0) {
             System.out.println("Danh sach rong, khong co gi de xoa!");
             return;
         }
@@ -120,18 +177,18 @@ public class DSNXB {
         System.out.print("Nhap ma so NXB can xoa: ");
         String temp = in.readLine();
         int check = -1;
-        for(int i = 0; i < nxb.length; i++){
-            if(temp.equals(nxb[i].getMaNXB())){
+        for(int i = 0; i < dsNXB.length; i++){
+            if(temp.equals(dsNXB[i].getMaNXB())){
                 check = i;
                 break;
             }
         }
         
         if(check != -1){
-            for(int i = check; i < nxb.length-1; i++){
-                nxb[i] = nxb[i+1];
+            for(int i = check; i < dsNXB.length-1; i++){
+                dsNXB[i] = dsNXB[i+1];
             }
-            nxb = Arrays.copyOf(nxb, nxb.length-1);
+            dsNXB = Arrays.copyOf(dsNXB, dsNXB.length-1);
         }
         else{
             System.out.println("Ma so khong tim thay!");
@@ -143,15 +200,15 @@ public class DSNXB {
         System.out.print("Nhap ma so nha xuat ban can sua: ");
         String temp = in.readLine();
         int check = -1;
-        for(int i = 0; i < nxb.length; i++){
-            if(temp.equals(nxb[i].getMaNXB())){
+        for(int i = 0; i < dsNXB.length; i++){
+            if(temp.equals(dsNXB[i].getMaNXB())){
                 check = i;
                 break;
             }
         }
         
         if(check != -1){
-            nxb[check].suaThongTin();
+            dsNXB[check].suaThongTin();
         }
         else{
             System.out.println("Ma so khong tim thay!");
@@ -165,9 +222,9 @@ public class DSNXB {
         System.out.print("Nhap ma so nha xuat ban can tim: ");
         String temp = in.readLine();
         
-        for(int i = 0; i < nxb.length; i++){
-            if(temp.equals(nxb[i].getMaNXB())){
-                nxb[i].xuat();
+        for(int i = 0; i < dsNXB.length; i++){
+            if(temp.equals(dsNXB[i].getMaNXB())){
+                dsNXB[i].xuat();
                 return;
             }
         }
@@ -186,12 +243,12 @@ public class DSNXB {
                            0. Khong sap xep""");
             choice = Integer.parseInt(in.readLine());
             if(choice == 1){
-                for(int i = 0; i < nxb.length-1; i++){
-                    for(int y = 0; y < nxb.length-i-1; y++){
-                        if(nxb[y].getTenNXB().compareToIgnoreCase(nxb[y+1].getTenNXB()) > 0){ //>0 -> str1 > str2
-                            NHAXUATBAN temp = nxb[y];
-                            nxb[y] = nxb[y+1];
-                            nxb[y+1] = temp;
+                for(int i = 0; i < dsNXB.length-1; i++){
+                    for(int y = 0; y < dsNXB.length-i-1; y++){
+                        if(dsNXB[y].getTenNXB().compareToIgnoreCase(dsNXB[y+1].getTenNXB()) > 0){ //>0 -> str1 > str2
+                            NhaXuatBan temp = dsNXB[y];
+                            dsNXB[y] = dsNXB[y+1];
+                            dsNXB[y+1] = temp;
                         }
                         
                     }
@@ -199,12 +256,12 @@ public class DSNXB {
                 return;
             }
             else if(choice == 2){
-                for(int i = 0; i < nxb.length-1; i++){
-                    for(int y = 0; y < nxb.length-i-1; y++){
-                        if(nxb[y].getTenNXB().compareToIgnoreCase(nxb[y+1].getTenNXB()) < 0){ //<0 -> str1 < str2
-                            NHAXUATBAN temp = nxb[y];
-                            nxb[y] = nxb[y+1];
-                            nxb[y+1] = temp;
+                for(int i = 0; i < dsNXB.length-1; i++){
+                    for(int y = 0; y < dsNXB.length-i-1; y++){
+                        if(dsNXB[y].getTenNXB().compareToIgnoreCase(dsNXB[y+1].getTenNXB()) < 0){ //<0 -> str1 < str2
+                            NhaXuatBan temp = dsNXB[y];
+                            dsNXB[y] = dsNXB[y+1];
+                            dsNXB[y+1] = temp;
                         }
                         
                     }

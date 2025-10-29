@@ -11,23 +11,21 @@ package com.mycompany.qlchs;
 
 import java.io.*;
         
-public class NHANVIEN {
+public class NhanVien {
     private String maNV;
-    private String hoTen;
     private String ho; private String ten;
     private String chucVu;
     private float luong;
     private String SDT;
     
     //Default
-    public NHANVIEN(){
+    public NhanVien(){
         
     }
     //Parameterized
-    public NHANVIEN(String maNV, String hoTen, String ho, String ten, String chucVu,
+    public NhanVien(String maNV, String hoTen, String ho, String ten, String chucVu,
             float luong, String SDT){
         this.maNV = maNV;
-        this.hoTen = hoTen; 
         this.ho = ho;
         this.ten = ten;
         this.chucVu = chucVu;
@@ -35,8 +33,7 @@ public class NHANVIEN {
         this.SDT = SDT;
     }
     //Copy
-    public NHANVIEN(NHANVIEN nv){
-        this.hoTen = nv.hoTen;
+    public NhanVien(NhanVien nv){
         this.ho = nv.ho;
         this.ten = nv.ten;
         this.chucVu = nv.chucVu;
@@ -50,14 +47,6 @@ public class NHANVIEN {
     
     public void setMaNV(String maNV){
         this.maNV = maNV;
-    }
-    
-    public String getHoTen() {
-        return hoTen;
-    }
-
-    public void setHoTen(String hoTen) {
-        this.hoTen = hoTen;
     }
 
     public String getHo() {
@@ -155,11 +144,15 @@ public class NHANVIEN {
     public void nhap() throws Exception{
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Nhap thong tin nhan vien");
-        System.out.print("Ho ten nhan vien: ");
-        hoTen = in.readLine();
-        hoTen = hoTen.trim().replaceAll("\\s+", " ");//Xoa khoang cach du thua
-        String[] temp = hoTen.split("\\s+");
-        ho = temp[0]; ten = temp[temp.length-1];
+        
+        System.out.print("Ho nhan vien: ");
+        ho = in.readLine();
+        ho = ho.trim().replaceAll("\\s+", " ");
+        
+        System.out.print("Ten nhan vien: ");
+        ten = in.readLine();
+        ten = ten.trim().replaceAll("\\s+", " ");
+        
         
         maNV = hamMaNV();//Nhap ma nv
         
@@ -171,6 +164,9 @@ public class NHANVIEN {
     }
     
     public void xuatNV(){
+        
+        String hoTen = getHo() + " " + getTen();
+        
         System.out.printf("%-10s %-20s %-15s %-10.2f %-15s\n",
                     maNV, hoTen, chucVu, 
                     luong, SDT);
@@ -192,11 +188,13 @@ public class NHANVIEN {
             choice = Integer.parseInt(in.readLine());
             switch(choice){
                 case 1:{
-                    System.out.print("Ho ten nhan vien: ");
-                    hoTen = in.readLine();
-                    hoTen = hoTen.trim().replaceAll("\\s+", " ");//Xoa khoang cach du thua
-                    String[] temp = hoTen.split("\\s+");
-                    ho = temp[0]; ten = temp[temp.length-1];
+                    System.out.print("Ho nhan vien: ");
+                    ho = in.readLine();
+                    ho = ho.trim().replaceAll("\\s+", " ");
+
+                    System.out.print("Ten nhan vien: ");
+                    ten = in.readLine();
+                    ten = ten.trim().replaceAll("\\s+", " ");
                     break;
                 }
                 case 2:{
